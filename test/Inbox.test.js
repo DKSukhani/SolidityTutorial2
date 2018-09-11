@@ -6,7 +6,7 @@ const { interface, bytecode } = require ('../compile')
 
 let accounts;
 let inboxContract;
-const INITIAL_MESSAGE = "Hi Dipesh!"
+// const INITIAL_MESSAGE = "Hi Dipesh!"
 
 beforeEach (async () => {
 // Get a list of all accounts
@@ -15,7 +15,7 @@ accounts = await web3.eth.getAccounts(function(err, res){
 
 // Use one of those accounts to deploy the contract
 
-inboxContract = await web3.eth.contract(JSON.parse(interface)).deploy({ data: bytecode, arguments : [INITIAL_MESSAGE]}).send({ from: accounts[0], gas: "1000000"});
+	inboxContract = await web3.eth.contract(JSON.parse(interface)).new(["Hi Dipesh!"], { data: bytecode,from: accounts[0], gas: "1000000"});
 
 });
 
@@ -29,9 +29,9 @@ describe('Inbox', ()=> {
 	it('it has a default message', async () => {
 		const message  = await inboxContract.methods.message().call();
 		console.log(message);
-		assert.equal(message, INITIAL_MESSAGE)
+		assert.equal(message, "Hi Dipesh!")
 	});
 
 	// in this test we will modify the message and test if
-	
+
 });
